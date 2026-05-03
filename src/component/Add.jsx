@@ -237,27 +237,29 @@ export default function Add() {
         <table className="w-full border text-sm">
           <thead>
             <tr className="bg-gray-100">
-              <th className="p-2">Image</th>
-              <th>Name</th>
-              <th>Title</th>
-              <th>Description</th>
-              <th>Actions</th>
+              <th className="border border-gray-300 p-2">Image</th>
+              <th className="border border-gray-300 p-2">Name</th>
+              <th className="border border-gray-300 p-2">Category</th>
+              <th className="border border-gray-300 p-2">Title</th>
+              <th className="border border-gray-300 p-2">Description</th>
+              <th className="border border-gray-300 p-2">Actions</th>
             </tr>
           </thead>
 
           <tbody>
             {products.map((p) => (
               <tr key={p._id} className="border-t">
-                <td className="p-2">
+                <td className="border border-gray-300 p-2">
                   <img
                     src={p.images?.[0]?.url}
                     className="w-10 h-10 rounded object-cover"
                   />
                 </td>
-                <td>{p.name}</td>
-                <td>{p.title}</td>
-                <td>{p.description}</td>
-                <td className="">
+                <td className="border border-gray-300 p-2">{p.name}</td>
+                <td className="border border-gray-300 p-2">{p.category}</td>
+                <td className="border border-gray-300 p-2">{p.title}</td>
+                <td className="border border-gray-300 p-2">{p.description}</td>
+                <td className="border border-gray-300 p-2">
                   <div className="w-full flex items-center justify-end h-full gap-3">
                      <button
                     onClick={() => handleEdit(p)}
