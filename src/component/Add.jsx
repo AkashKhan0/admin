@@ -14,12 +14,13 @@ export default function Add() {
 
   const [loading, setLoading] = useState(false);
   const [editId, setEditId] = useState(null);
+  const [category, setCategory] = useState("");
 
   const inputRef = useRef();
 
-  const API = "http://localhost:5000/api/products";
+  const API = process.env.NEXT_PUBLIC_API_URL + "/api/products";
 
-  /* ================= UPLOAD ================= */
+  /* ================= UPLOAD ================= */ 
   const handleUploadClick = () => {
     inputRef.current.click();
   };
@@ -64,12 +65,15 @@ export default function Add() {
       setLoading(true);
 
       const formData = new FormData();
+      formData.append("category", category);
       formData.append("name", name);
       formData.append("title", title);
       formData.append("description", description);
 
       images.forEach((img) => {
-        formData.append("images", img.file);
+        if (img.file) {
+          formData.append("images", img.file);
+        }
       });
 
       if (editId) {
@@ -109,6 +113,7 @@ export default function Add() {
   /* ================= EDIT ================= */
   const handleEdit = (product) => {
     setEditId(product._id);
+    setCategory(product.category || "");
     setName(product.name);
     setTitle(product.title || "");
     setDescription(product.description || "");
@@ -118,13 +123,12 @@ export default function Add() {
       product.images.map((img) => ({
         file: null,
         url: img.url,
-      }))
+      })),
     );
   };
 
   return (
     <div className="w-full h-fit overflow-y-scroll no-scrollbar max-h-[calc(100vh-100px)]">
-      
       {/* ================= IMAGE UPLOAD ================= */}
       <div className="w-full flex flex-wrap gap-4">
         <div
@@ -166,6 +170,32 @@ export default function Add() {
       />
 
       <div className="w-full mt-2 uni_col gap-2">
+        {/* ================= CATEGORY ================= */}
+        <div className="flex gap-2 w-full">
+          <label className="flex items-center gap-2 cursor-pointer">
+            <input
+              type="radio"
+              name="category"
+              value="medical"
+              onChange={(e) => setCategory(e.target.value)}
+              className="accent-red-600 w-4 h-4"
+            />
+            <span className="text-lg font-medium">Medical</span>
+          </label>
+
+          <label className="flex items-center gap-2 cursor-pointer">
+            <input
+              type="radio"
+              name="category"
+              value="surgical"
+              onChange={(e) => setCategory(e.target.value)}
+              className="accent-red-600 w-4 h-4"
+            />
+            <span className="text-lg font-medium">Surgical</span>
+          </label>
+        </div>
+
+        {/* ================= INPUTS ================= */}
         <div className="flex gap-2 w-full">
           <input
             value={name}
@@ -198,11 +228,7 @@ export default function Add() {
           disabled={loading}
           className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition"
         >
-          {loading
-            ? "Uploading..."
-            : editId
-            ? "Update Product"
-            : "Add Product"}
+          {loading ? "Uploading..." : editId ? "Update Product" : "Add Product"}
         </button>
       </div>
 
@@ -214,6 +240,7 @@ export default function Add() {
               <th className="p-2">Image</th>
               <th>Name</th>
               <th>Title</th>
+              <th>Description</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -229,8 +256,10 @@ export default function Add() {
                 </td>
                 <td>{p.name}</td>
                 <td>{p.title}</td>
-                <td className="flex gap-2 p-2">
-                  <button
+                <td>{p.description}</td>
+                <td className="">
+                  <div className="w-full flex items-center justify-end h-full gap-3">
+                     <button
                     onClick={() => handleEdit(p)}
                     className="bg-yellow-400 px-2 py-1 rounded"
                   >
@@ -243,6 +272,8 @@ export default function Add() {
                   >
                     Delete
                   </button>
+                  </div>
+                 
                 </td>
               </tr>
             ))}
