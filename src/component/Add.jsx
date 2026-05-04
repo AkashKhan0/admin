@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { FiPlus, FiX } from "react-icons/fi";
 import axios from "axios";
+import { FaEdit } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
 
 export default function Add() {
   const [images, setImages] = useState([]);
@@ -260,19 +262,19 @@ export default function Add() {
                 <td className="border border-gray-300 p-2">{p.title}</td>
                 <td className="border border-gray-300 p-2">{p.description}</td>
                 <td className="border border-gray-300 p-2">
-                  <div className="w-full flex items-center justify-end h-full gap-3">
+                  <div className="w-full flex items-center justify-center h-full gap-3">
                      <button
                     onClick={() => handleEdit(p)}
-                    className="bg-yellow-400 px-2 py-1 rounded"
+                    className="px-2 py-1 rounded"
                   >
-                    Edit
+                    <FaEdit />
                   </button>
 
                   <button
                     onClick={() => handleDelete(p._id)}
-                    className="bg-red-500 text-white px-2 py-1 rounded"
+                    className="px-2 py-1 rounded"
                   >
-                    Delete
+                    <MdDelete />
                   </button>
                   </div>
                  
