@@ -46,6 +46,7 @@ export default function Add() {
   const resetForm = () => {
     setImages([]);
     setName("");
+    setCategory("");
     setTitle("");
     setDescription("");
     setEditId(null);
