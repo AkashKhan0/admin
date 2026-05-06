@@ -180,6 +180,7 @@ export default function Add() {
               type="radio"
               name="category"
               value="medical"
+              checked={category === "medical"}
               onChange={(e) => setCategory(e.target.value)}
               className="accent-red-600 w-4 h-4"
             />
@@ -191,6 +192,7 @@ export default function Add() {
               type="radio"
               name="category"
               value="surgical"
+              checked={category === "surgical"}
               onChange={(e) => setCategory(e.target.value)}
               className="accent-red-600 w-4 h-4"
             />
